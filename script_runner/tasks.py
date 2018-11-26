@@ -207,6 +207,7 @@ def execute(script_path, ctx, process):
                                cwd=cwd,
                                bufsize=1,
                                close_fds=on_posix)
+    process.communicate()
 
     return_code = None
 
