@@ -201,13 +201,13 @@ def execute(script_path, ctx, process):
 
     process = subprocess.Popen(command,
                                shell=True,
-                               stdout=None,
+                               stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE,
                                env=env,
                                cwd=cwd,
                                bufsize=1,
                                close_fds=on_posix)
-
+    process.wait()
     return_code = None
 
     stdout_consumer = OutputConsumer(process.stdout)
