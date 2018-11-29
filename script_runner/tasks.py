@@ -208,6 +208,7 @@ def execute(script_path, ctx, process):
                                bufsize=1,
                                close_fds=on_posix)
     return_code = None
+    process.wait()
 
     stdout_consumer = OutputConsumer(process.stdout)
     stderr_consumer = OutputConsumer(process.stderr)
@@ -304,7 +305,7 @@ class OutputConsumer(object):
         self.consumer.start()
 
     def consume_output(self):
-        for line in self.out.readlines():
+        for line in iter(self.out.readline, b''):
             self.buffer.write(line)
         self.out.close()
 
